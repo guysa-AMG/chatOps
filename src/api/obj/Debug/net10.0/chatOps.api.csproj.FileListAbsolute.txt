@@ -31,3 +31,4 @@
 /home/arx/proj/chatOps/src/api/obj/Debug/net10.0/chatOps.api.pdb
 /home/arx/proj/chatOps/src/api/obj/Debug/net10.0/chatOps.api.genruntimeconfig.cache
 /home/arx/proj/chatOps/src/api/obj/Debug/net10.0/ref/chatOps.api.dll
+/home/arx/proj/chatOps/src/api/obj/Debug/net10.0/chatOps.api.sourcelink.json
