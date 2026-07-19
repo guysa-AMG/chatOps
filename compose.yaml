@@ -1,0 +1,4 @@
+services:
+  rel-db:
+    image: postgresql:latest
+    
