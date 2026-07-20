@@ -1,4 +1,26 @@
 services:
   rel-db:
-    image: postgresql:latest
-    
+    image: postgres:15
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASS}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_DB: ${PG_DB}
+    ports:
+      - 5432:5432
+  mongodb:
+    image: mongodb/mongodb-community-server:7.0-ubi8-slim
+    volumes:
+      - mgdata:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${PG_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${PG_PASS}
+  redis:
+    image: redis:latest
+    command: redis-server --requirepass ${PG_PASS}
+
+
+volumes:
+  pgdata: 
+  mgdata:

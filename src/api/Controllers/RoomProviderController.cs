@@ -1,14 +1,23 @@
+using chatOps.api.Models;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace chatOps.api.Controllers;
 
 [ApiController]
-[Route("api/list")]
-public class RoomProviderController : ControllerBase
+[Route("api/v1/[controller]")]
+public class RoomsController : ControllerBase
 {
-    // [HttpGet(Name = "List")]
-    public string Get()
+     readonly AppDbContext _appDbContext;
+    public RoomsController(AppDbContext context)
     {
-        return "hello";
+        _appDbContext=context; 
+    }
+     [HttpGet("List")]
+    public String Get()
+    {
+        
+     return _appDbContext.Users.First().ToJson();
+                    
     }
 }
