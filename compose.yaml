@@ -16,6 +16,14 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${PG_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${PG_PASS}
+  reverse-proxy:
+    image: nginx:1.31
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   redis:
     image: redis:latest
     command: redis-server --requirepass ${PG_PASS}

@@ -22,105 +22,199 @@ namespace chatOps.api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("RoomTag", b =>
+                {
+                    b.Property<int>("RoomsroomId")
+                        .HasColumnType("integer")
+                        .HasColumnName("roomsroom_id");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("integer")
+                        .HasColumnName("tags_id");
+
+                    b.HasKey("RoomsroomId", "TagsId")
+                        .HasName("pk_room_tag");
+
+                    b.HasIndex("TagsId")
+                        .HasDatabaseName("ix_room_tag_tags_id");
+
+                    b.ToTable("room_tag", (string)null);
+                });
+
             modelBuilder.Entity("RoomUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("joinedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("joined_at");
 
                     b.Property<int>("roomId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("room_id");
 
                     b.Property<int>("userId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_room_user");
 
-                    b.HasIndex("roomId");
+                    b.HasIndex("roomId")
+                        .HasDatabaseName("ix_room_user_room_id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("userId")
+                        .HasDatabaseName("ix_room_user_user_id");
 
-                    b.ToTable("RoomUser");
+                    b.ToTable("room_user", (string)null);
+                });
+
+            modelBuilder.Entity("Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Colour")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("colour");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_tags");
+
+                    b.ToTable("tags", (string)null);
                 });
 
             modelBuilder.Entity("chatOps.api.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BackgroundImage")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("background_image");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("email");
 
                     b.Property<string>("Image")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("image");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<int?>("PhoneNumber")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("phone_number");
 
                     b.Property<string>("SecondaryEmail")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("secondary_email");
 
                     b.Property<string>("about")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("about");
 
                     b.PrimitiveCollection<string[]>("links")
                         .IsRequired()
-                        .HasColumnType("text[]");
+                        .HasColumnType("text[]")
+                        .HasColumnName("links");
 
                     b.Property<int?>("roomId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("room_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_users");
 
-                    b.HasIndex("roomId");
+                    b.HasIndex("roomId")
+                        .HasDatabaseName("ix_users_room_id");
 
-                    b.ToTable("Users");
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("chatOps.api.Room", b =>
                 {
                     b.Property<int>("roomId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("room_id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("roomId"));
 
                     b.Property<string>("author")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("author");
+
+                    b.Property<DateTime>("created")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created");
+
+                    b.Property<string>("creator")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("creator");
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
-                    b.PrimitiveCollection<int[]>("tags")
+                    b.HasKey("roomId")
+                        .HasName("pk_rooms");
+
+                    b.ToTable("rooms", (string)null);
+                });
+
+            modelBuilder.Entity("RoomTag", b =>
+                {
+                    b.HasOne("chatOps.api.Room", null)
+                        .WithMany()
+                        .HasForeignKey("RoomsroomId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasColumnType("integer[]");
+                        .HasConstraintName("fk_room_tag_rooms_roomsroom_id");
 
-                    b.HasKey("roomId");
-
-                    b.ToTable("Rooms");
+                    b.HasOne("Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_room_tag_tags_tags_id");
                 });
 
             modelBuilder.Entity("RoomUser", b =>
@@ -129,13 +223,15 @@ namespace chatOps.api.Migrations
                         .WithMany("UsersRooms")
                         .HasForeignKey("roomId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_room_user_rooms_room_id");
 
                     b.HasOne("chatOps.api.Models.User", "User")
                         .WithMany("UsersRooms")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_room_user_users_user_id");
 
                     b.Navigation("Room");
 
@@ -146,7 +242,8 @@ namespace chatOps.api.Migrations
                 {
                     b.HasOne("chatOps.api.Room", null)
                         .WithMany("blacklisted")
-                        .HasForeignKey("roomId");
+                        .HasForeignKey("roomId")
+                        .HasConstraintName("fk_users_rooms_room_id");
                 });
 
             modelBuilder.Entity("chatOps.api.Models.User", b =>

@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ruku1LXuQX8=",
+  "dgSpecHash": "9WNKQv+htBk=",
   "success": true,
   "projectFilePath": "/home/arx/proj/chatOps/src/api/chatOps.api.csproj",
   "expectedPackageFiles": [
     "/home/arx/.nuget/packages/dnsclient/1.6.1/dnsclient.1.6.1.nupkg.sha512",
+    "/home/arx/.nuget/packages/efcore.namingconventions/10.0.1/efcore.namingconventions.10.0.1.nupkg.sha512",
     "/home/arx/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/arx/.nuget/packages/microsoft.aspnetcore.openapi/10.0.10/microsoft.aspnetcore.openapi.10.0.10.nupkg.sha512",
     "/home/arx/.nuget/packages/microsoft.bcl.cryptography/9.0.13/microsoft.bcl.cryptography.9.0.13.nupkg.sha512",

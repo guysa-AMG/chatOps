@@ -14,8 +14,9 @@ builder.Services.AddOpenApi();
 string conStr = builder.Configuration.GetConnectionString("postgres")!;
 string mongocli = builder.Configuration.GetConnectionString("mongoDb")!;
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(conStr));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(conStr).UseSnakeCaseNamingConvention());
 builder.Services.AddSingleton<IMongoClient>(options => new MongoClient(mongocli));
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
