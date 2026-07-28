@@ -1,5 +1,5 @@
 services:
-  rel-db:
+  redl-db:
     image: postgres:15
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -9,10 +9,12 @@ services:
       POSTGRES_DB: ${PG_DB}
     ports:
       - 5432:5432
-  mongodb:
-    image: mongodb/mongodb-community-server:7.0-ubi8-slim
+  mongo:
+    image: mongo:7.0
     volumes:
-      - mgdata:/data/db
+      - mondata:/data/db
+    ports:
+      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${PG_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${PG_PASS}
@@ -27,8 +29,21 @@ services:
   redis:
     image: redis:latest
     command: redis-server --requirepass ${PG_PASS}
+  mongoView:
+    image: mongo-express:1.0-20-alpine3.19
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${PG_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${PG_PASS}
+      ME_CONFIG_BASICAUTH_USERNAME: ${PG_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${PG_PASS}
 
 
 volumes:
   pgdata: 
-  mgdata:
+  mondata:
