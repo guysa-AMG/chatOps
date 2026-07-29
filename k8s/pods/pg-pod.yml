@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres
+  labels:
+    app: reldb
+    tier: database
+spec:
+  containers:
+    - name: "pg_db"
+      image: postgres:15
+      env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: pg_data
+              key: user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pg_data
+              key: password
+
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: pg_data
+              key: db_name
+      ports:
+        - containerPort: 5432
+          name: postgres
+      volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres_db
+  volumes:
+    - name: postgres_db
+      persistentVolumeClaim:
+        claimName: postgres-pvc
+
