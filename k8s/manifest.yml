@@ -1,7 +1,23 @@
-apiVersion: 1
+apiVersion: "v1"
 kind: Pod
 metadata:
   labels:
     app: api
-
+spec:
+  containers:
+    - name: "pg_db"
+      image: postgres:15
+      env:
+        - name: POSTGRES_USER
+          value: ${PG_USER}
+        - name: POSTGRES_PASSWORD
+          value: ${PG_PASS}
+        - name: POSTGRES_DB
+          value: ${PG_DB}
+      ports:
+        - containerPort: 5432
+          hostPort: 5432
+      volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres_db
 
